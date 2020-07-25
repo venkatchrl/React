@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
   function DishDetail(props){
@@ -10,9 +10,11 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
       }
     else{
       return(
-        <div className="row">
-            <RenderDish dish={props.dish}/>
-            <RenderComments comments={props.dish.comments}/>
+        <div className="container">
+            <div className="row">
+              <RenderDish dish={props.dish}/>
+              <RenderComments comments={props.dish.comments}/>
+            </div>
         </div>
         )
       }
@@ -48,16 +50,11 @@ function RenderDish({dish}) {
       }
 
       else
-
-      var date = new Date(comment.date);
-      const m = date.toLocaleString('default',{ month: 'short' });
-      const d = date.getDate();
-      const y = date.getFullYear();
-
         return(
           <li className="list-unstyled" key={comment.id}>
               <p>{comment.comment}</p>
-              <p>--{comment.author}, {m} {d}, {y}</p>
+              <p>--{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+              </p>
           </li>
         )
     })

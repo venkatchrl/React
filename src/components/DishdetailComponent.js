@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
-
+import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
   function DishDetail(props){
     if(props.dish == null){
@@ -12,8 +12,18 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
       return(
         <div className="container">
             <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><a href="/menu">Menu</a></BreadcrumbItem>
+                    <BreadcrumbItem active><a>{props.dish.name}</a></BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{props.dish.name}</h3>
+                    <hr />
+                </div>
+            </div>
+            <div className="row">
               <RenderDish dish={props.dish}/>
-              <RenderComments comments={props.dish.comments}/>
+              <RenderComments comments={props.comments}/>
             </div>
         </div>
         )
@@ -51,11 +61,13 @@ function RenderDish({dish}) {
 
       else
         return(
-          <li className="list-unstyled" key={comment.id}>
-              <p>{comment.comment}</p>
-              <p>--{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
-              </p>
-          </li>
+          <ul className="list-unstyled">
+            <li key={comment.id}>
+                <p>{comment.comment}</p>
+                <p>--{comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                </p>
+            </li>
+          </ul>
         )
     })
     return(
